@@ -1,0 +1,19 @@
+import axios from 'axios';
+
+const BASE_URI = 'http://localhost:3000/v1';
+const api = axios.create({
+  baseURL: BASE_URI,
+});
+
+export const post = async (uri, options = {}) => {
+  const { body = {} } = options;
+  const response = await api.post(uri, body);
+  return response;
+};
+
+export const get = async (uri) => {
+  const response = await api.get(uri);
+  return response;
+};
+
+export default api;

@@ -1,0 +1,35 @@
+.login {
+  width: 100%;
+  height: inherit;
+  position: relative;
+}
+  
+.form {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+}
+  
+.field {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+  
+.input {
+  width: 100%;
+  padding: 1rem;
+  color: #525F7F;
+  letter-spacing: 2.5px;
+  outline: none;
+  border: 1px solid #E1E8ED;
+}
+  
+.login .btn__primary {
+  padding: 1rem 0;
+  cursor: pointer;
+}
+  
+.input:focus {
+  border-color: #525F7F;
+}
