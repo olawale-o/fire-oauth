@@ -1,16 +1,18 @@
 <template>
-  <HomeComponent />
+  <div>
+    <div>HomeComponent works</div>
+  </div>
 </template>
 
 <script>
-import HomeComponent from '@/components/Private/Home.vue'
+import { get } from '@/api';
 export default {
-  name: 'AuthView',
-  components: {
-    HomeComponent,
-  },
-  props: {
-    msg: String
+  name: 'HomeComponent',
+  setup() {
+    (async() => {
+      await get('/private');
+    })();
+    return {};
   }
 }
 </script>
