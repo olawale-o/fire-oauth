@@ -8,7 +8,7 @@ const routes = [
     component: AuthView
   },
   {
-    path: '/priavate',
+    path: '/private',
     name: 'private',
     component: () => import('../views/Private')
   }
