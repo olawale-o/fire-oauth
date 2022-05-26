@@ -29,6 +29,9 @@
           required
           />
         </div>
+        <div class="field">
+          <router-link to="#" class="link">Forgot password?</router-link>
+        </div>
         <div class="action">
           <button
             type="submit"
