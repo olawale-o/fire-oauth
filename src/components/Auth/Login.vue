@@ -30,7 +30,7 @@
           />
         </div>
         <div class="field">
-          <router-link to="#" class="link">Forgot password?</router-link>
+          <router-link to="/auth/forgot_password" class="link">Forgot password?</router-link>
         </div>
         <div class="action">
           <button
