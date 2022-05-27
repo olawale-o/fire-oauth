@@ -1,19 +1,12 @@
 <template>
   <div class="auth">
-    <LoginComponent />
+    <router-view />
   </div>
 </template>
 
 <script>
-import LoginComponent from '@/components/Auth/Login.vue'
 export default {
   name: 'AuthView',
-  components: {
-    LoginComponent,
-  },
-  props: {
-    msg: String
-  }
 }
 </script>
 
