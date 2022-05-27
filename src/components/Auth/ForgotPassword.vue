@@ -1,15 +1,20 @@
 <template>
   <div class="login">
     <div class="form">
-      <span class="error"></span>
-      <form @submit="console.log('submit')">
+      <div class="success" v-if="data.message">
+        <span class="success__message">{{data.message}}</span>
+      </div>
+      <ul class="errors">
+        <li class="error" v-for="(error, key) in data.errors" :key="key">{{error}}</li>
+      </ul>
+      <form @submit.prevent="onSubmit">
         <div class="field">
           <input
           type="email"
           name="email"
           placeholder="Email"
           class="input"
-          v-model="email"
+          v-model="data.email"
           required
           />
         </div>
@@ -27,21 +32,34 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { reactive } from 'vue';
 import { post } from '@/api';
 export default {
   name: 'ForgotPasswordComponent',
   setup() {
-    const email = ref('');
+    const data = reactive({
+      email: '',
+      message: '',
+      errors: [],
+    });
     return {
-      email,
+      data,
       onSubmit: async () => {
-        const response = await post('/auth/password',
+        try {
+          const { data: { message } } = await post('/auth/password',
           { body: {
-            email,
-            redirect_url: 'http://localhost:8080/reset_password',
+            email: data.email,
+            redirect_url: 'http://localhost:8080/auth/reset_password',
           } })
-        console.log(response);
+          data.message = message;
+          data.email = '';
+        } catch(e) {
+          const { response: { data: { errors } } } = e
+          if (e.code === 'ERR_BAD_REQUEST') {
+            data.errors = errors
+          }
+          data.email = '';
+        }
       }
     }
   }
