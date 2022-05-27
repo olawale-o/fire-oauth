@@ -44,7 +44,7 @@
 <script>
 import { reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { put } from '@/api';
+import { resetPasswordService } from '@/services/auth';
 import userAuthStore from '@/store/auth';
 export default {
   name: 'ResetPasswordComponent',
@@ -72,12 +72,13 @@ export default {
         data.message = '';
         data.errors = [];
         try {
-          const { data: { message } } = await put('/auth/password',
-          { body: {
-            password: data.password,
-            password_confirmation: data.password_confirmation,
-            redirect_url: 'http://localhost:8080/auth/',
-          } })
+          const { data: { message } } = await resetPasswordService({
+            body: {
+              password: data.password,
+              password_confirmation: data.password_confirmation,
+              redirect_url: 'http://localhost:8080/auth/',
+            }
+          });
           data.message = message;
           setTimeout(() => {
             router.push('/auth');
