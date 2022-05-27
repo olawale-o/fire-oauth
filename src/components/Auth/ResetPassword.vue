@@ -72,7 +72,7 @@ export default {
         data.message = '';
         data.errors = [];
         try {
-          const { data: { message } } = await resetPasswordService({
+          const { message } = await resetPasswordService({
             body: {
               password: data.password,
               password_confirmation: data.password_confirmation,

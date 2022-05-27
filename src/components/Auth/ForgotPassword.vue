@@ -48,7 +48,7 @@ export default {
         data.errors = [];
         data.message = '';
         try {
-          const { data: { message } } = await forgotPasswordService({
+          const { message } = await forgotPasswordService({
             body: {
               email: data.email,
               redirect_url: 'http://localhost:8080/auth/reset_password',
