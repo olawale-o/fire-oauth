@@ -52,12 +52,12 @@ export default {
             redirect_url: 'http://localhost:8080/auth/reset_password',
           } })
           data.message = message;
-          data.email = '';
         } catch(e) {
           const { response: { data: { errors } } } = e
           if (e.code === 'ERR_BAD_REQUEST') {
             data.errors = errors
           }
+        } finally {
           data.email = '';
         }
       }
