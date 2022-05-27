@@ -1,21 +1,23 @@
 <template>
   <div class="login">
     <div class="form">
-      <span class="error"></span>
+      <ul class="errors" v-if="obj.errors">
+        <li class="error" v-for="(error, key) in obj.errors" :key="key">{{error}}</li>
+      </ul>
       <button type="button" @click="continueWithGoogle" class="google__button">
         <span class="google">
           <img :src="google" alt="google" />
         </span>
         <span class="btn__text">Continue with Google</span>
       </button>
-      <form @submit="console.log('submit')">
+      <form @submit.prevent="onSubmit">
         <div class="field">
           <input
           type="email"
           name="email"
           placeholder="Email"
           class="input"
-          v-model="email"
+          v-model="obj.email"
           required
           />
         </div>
@@ -25,9 +27,12 @@
           name="password"
           placeholder="******"
           class="input"
-          v-model="password"
+          v-model="obj.password"
           required
           />
+        </div>
+        <div class="field">
+          <router-link to="/auth/forgot_password" class="link">Forgot password?</router-link>
         </div>
         <div class="action">
           <button
@@ -43,23 +48,30 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import google from '@/assets/google.png';
 import { signInWithGoogle } from '@/services/firebase';
-import { post } from '@/api';
+import { loginService, loginWithProvider } from '@/services/auth';
+import userAuthStore from '@/store/auth';
 export default {
   name: 'LoginComponent',
   setup() {
     const router = useRouter();
-    const user = ref(null);
+    const store = userAuthStore();
+    const obj = reactive({
+      user: null,
+      email: '',
+      password: '',
+      errors: [],
+    });
 
     const continueWithGoogle = async () => {
       try {
         const currentUser = await signInWithGoogle();
-        user.value = currentUser;
-        if (user.value) {
-          const { providerId: provider, accessToken, uid, email } = user.value
+        obj.user = currentUser;
+        if (obj.user) {
+          const { providerId: provider, accessToken, uid, email } = obj.user
           const data = {
             provider,
             accessToken,
@@ -68,11 +80,7 @@ export default {
               email
             }
           };
-          const response = await post('/social_auth/callback', {
-            body: {
-              user: data,
-            }
-          });
+          const response = await loginWithProvider({body: { user: data }});
           if (response) {
             router.push('/private');
           }
@@ -85,9 +93,25 @@ export default {
     return {
       continueWithGoogle,
       google,
-      email: '',
-      password: '',
-      user,
+      obj,
+      onSubmit: async () => {
+        obj.errors = [];
+        try {
+          const { data } = await loginService({body: { email: obj.email, password: obj.password,}});
+          if (data) {
+            store.updateUser(data);
+            router.push('/private');
+          }
+        } catch(e) {
+          const { response: { data: { errors } } } = e
+          if (e.code === 'ERR_BAD_REQUEST') {
+            obj.errors = errors;
+          }
+        } finally {
+          obj.email = '';
+          obj.password = '';
+        }
+      }
     }
   },
 }
