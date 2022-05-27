@@ -45,6 +45,8 @@ export default {
     return {
       data,
       onSubmit: async () => {
+        data.errors = [];
+        data.message = '';
         try {
           const { data: { message } } = await post('/auth/password',
           { body: {
