@@ -5,10 +5,10 @@ export const requiresGuest = (to, from, next) => {
   const currentUser = store.currentUser;
   if(currentUser) {
     next({
-      path: from.fullPath
+      path: '/private'
     });
   } else {
-    store.$reset();
+   store.$reset();
     next();
   }
 };
