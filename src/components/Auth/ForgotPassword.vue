@@ -33,7 +33,7 @@
 
 <script>
 import { reactive } from 'vue';
-import { post } from '@/api';
+import { forgotPasswordService } from '@/services/auth';
 export default {
   name: 'ForgotPasswordComponent',
   setup() {
@@ -48,11 +48,12 @@ export default {
         data.errors = [];
         data.message = '';
         try {
-          const { data: { message } } = await post('/auth/password',
-          { body: {
-            email: data.email,
-            redirect_url: 'http://localhost:8080/auth/reset_password',
-          } })
+          const { data: { message } } = await forgotPasswordService({
+            body: {
+              email: data.email,
+              redirect_url: 'http://localhost:8080/auth/reset_password',
+            }
+          });
           data.message = message;
         } catch(e) {
           const { response: { data: { errors } } } = e
