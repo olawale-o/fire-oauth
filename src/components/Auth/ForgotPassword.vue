@@ -10,18 +10,20 @@
       <form @submit.prevent="onSubmit">
         <div class="field">
           <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          class="input"
-          v-model="data.email"
-          required
+            type="email"
+            name="email"
+            placeholder="Email"
+            class="input"
+            v-model="data.email"
+            required
+            data-test="email-input"
           />
         </div>
         <div class="action">
           <button
             type="submit"
             class="btn__link btn__primary"
+            data-test="submit-button"
           >
             Send
           </button>

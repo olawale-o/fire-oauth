@@ -13,32 +13,35 @@
       <form @submit.prevent="onSubmit">
         <div class="field">
           <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          class="input"
-          v-model="obj.email"
-          required
+            type="email"
+            name="email"
+            placeholder="Email"
+            class="input"
+            v-model="obj.email"
+            required
+            data-test="email-input"
           />
         </div>
         <div class="field">
           <input
-          type="password"
-          name="password"
-          placeholder="******"
-          class="input"
-          v-model="obj.password"
-          required
+            type="password"
+            name="password"
+            placeholder="******"
+            class="input"
+            v-model="obj.password"
+            required
+            data-test="password-input"
           />
         </div>
         <div class="field d-flex justify-content">
-          <router-link to="/auth/forgot_password" class="link">Forgot password?</router-link>
-          <router-link to="/auth/sign_up" class="link">Don't have an account?</router-link>
+          <router-link to="/auth/forgot_password" class="link" data-test="forgot-password-link">Forgot password?</router-link>
+          <router-link to="/auth/sign_up" class="link" data-test="register-link">Don't have an account?</router-link>
         </div>
         <div class="action">
           <button
             type="submit"
             class="btn__link btn__primary"
+            data-test="submit-button"
           >
             Login
           </button>

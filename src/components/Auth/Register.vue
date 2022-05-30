@@ -13,41 +13,45 @@
       <form @submit.prevent="onSubmit">
         <div class="field">
           <input
-          type="text"
-          name="name"
-          placeholder="Full name"
-          class="input"
-          v-model="obj.name"
-          required
+            type="text"
+            name="name"
+            placeholder="Full name"
+            class="input"
+            v-model="obj.name"
+            required
+            data-test="name-input"
           />
         </div>
         <div class="field">
           <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          class="input"
-          v-model="obj.email"
-          required
+            type="email"
+            name="email"
+            placeholder="Email"
+            class="input"
+            v-model="obj.email"
+            required
+            data-test="email-input"
           />
         </div>
         <div class="field">
           <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          class="input"
-          v-model="obj.password"
-          required
+            type="password"
+            name="password"
+            placeholder="Password"
+            class="input"
+            v-model="obj.password"
+            required
+            data-test="password-input"
           />
         </div>
         <div class="field">
-          <router-link to="/auth/log_in" class="link">Already have an account?</router-link>
+          <router-link to="/auth/log_in" class="link" data-test="login-link">Already have an account?</router-link>
         </div>
         <div class="action">
           <button
             type="submit"
             class="btn__link btn__primary"
+            data-test="submit-button"
           >
             Create
           </button>
