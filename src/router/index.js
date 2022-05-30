@@ -27,6 +27,12 @@ const routes = [
         component: () => import('../views/Auth/Login.vue'),
       },
       {
+        path: 'sign_up',
+        name: 'Register',
+        meta: { requiresAuth: false, },
+        component: () => import('../views/Auth/Register.vue'),
+      },
+      {
         path: 'forgot_password',
         name: 'ForgotPassword',
         meta: { requiresAuth: false, name: 'forgot_password' },

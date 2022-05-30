@@ -1,17 +1,19 @@
 <template>
   <div class="auth">
-    <router-view />
+    <RegisterComponent />
   </div>
 </template>
 
 <script>
+import RegisterComponent from '@/components/Auth/Register.vue'
 export default {
-  name: 'AuthView',
-  setup() {},
+  name: 'RegisterView',
+  components: {
+    RegisterComponent,
+  },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-  @import './style.css';
 </style>

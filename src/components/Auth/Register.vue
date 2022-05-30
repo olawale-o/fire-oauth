@@ -13,6 +13,16 @@
       <form @submit.prevent="onSubmit">
         <div class="field">
           <input
+          type="text"
+          name="name"
+          placeholder="Full name"
+          class="input"
+          v-model="obj.name"
+          required
+          />
+        </div>
+        <div class="field">
+          <input
           type="email"
           name="email"
           placeholder="Email"
@@ -25,22 +35,21 @@
           <input
           type="password"
           name="password"
-          placeholder="******"
+          placeholder="Password"
           class="input"
           v-model="obj.password"
           required
           />
         </div>
-        <div class="field d-flex justify-content">
-          <router-link to="/auth/forgot_password" class="link">Forgot password?</router-link>
-          <router-link to="/auth/sign_up" class="link">Don't have an account?</router-link>
+        <div class="field">
+          <router-link to="/auth/log_in" class="link">Already have an account?</router-link>
         </div>
         <div class="action">
           <button
             type="submit"
             class="btn__link btn__primary"
           >
-            Login
+            Create
           </button>
         </div>
       </form>
@@ -53,15 +62,16 @@ import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import google from '@/assets/google.png';
 import { signInWithGoogle } from '@/services/firebase';
-import { loginService, loginWithProvider } from '@/services/auth';
+import { registerService, loginWithProvider } from '@/services/auth';
 import userAuthStore from '@/store/auth';
 export default {
-  name: 'LoginComponent',
+  name: 'RegisterComponent',
   setup() {
     const router = useRouter();
     const store = userAuthStore();
     const obj = reactive({
       user: null,
+      name: '',
       email: '',
       password: '',
       errors: [],
@@ -96,7 +106,7 @@ export default {
       onSubmit: async () => {
         obj.errors = [];
         try {
-          const { data } = await loginService({body: { email: obj.email, password: obj.password,}});
+          const { data } = await registerService({body: { name: obj.name, email: obj.email, password: obj.password,}});
           if (data) {
             store.updateUser(data);
             router.push('/private');
@@ -109,6 +119,7 @@ export default {
         } finally {
           obj.email = '';
           obj.password = '';
+          obj.name = '';
         }
       }
     }
