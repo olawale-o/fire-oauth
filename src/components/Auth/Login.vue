@@ -31,8 +31,9 @@
           required
           />
         </div>
-        <div class="field">
+        <div class="field d-flex justify-content">
           <router-link to="/auth/forgot_password" class="link">Forgot password?</router-link>
+          <router-link to="/auth/sign_up" class="link">Don't have an account?</router-link>
         </div>
         <div class="action">
           <button
