@@ -6,20 +6,16 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: AuthView
+    component: AuthView,
+    redirect: { name: 'auth' },
   },
   {
     path: '/auth',
     name: 'auth',
     component: AuthView,
+    redirect: { name: 'Login' },
     beforeEnter: requiresGuest,
     children: [
-      {
-        path: '',
-        name: 'index',
-        redirect: { name: 'Login' },
-        meta: { requiresAuth: false, },
-      },
       {
         path: 'log_in',
         name: 'Login',
