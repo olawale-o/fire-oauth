@@ -65,7 +65,6 @@ export default {
       password: '',
       errors: [],
     });
-
     const continueWithGoogle = async () => {
       try {
         const currentUser = await signInWithGoogle();
@@ -89,7 +88,6 @@ export default {
         console.log(e);
       }
     };
-
     return {
       continueWithGoogle,
       google,
